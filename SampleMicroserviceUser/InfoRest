@@ -1,0 +1,8 @@
+
+POST http://localhost:8092/user   RAW BORY JSON 
+{  "name": "name2",  "balance": 4000 }
+
+http://localhost:8092/user/all  
+GET http://localhost:8092/user/1   // get by ID
+
+GET http://localhost:8092/user/transaction   KEY userId   VALIUE 1
