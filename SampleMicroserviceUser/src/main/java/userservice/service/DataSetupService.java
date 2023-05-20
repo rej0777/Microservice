@@ -16,7 +16,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.util.StreamUtils;
 
 
-@Service
+//@Service
 public class DataSetupService implements CommandLineRunner {
 
 	@Value("classpah:init.sql")
@@ -62,3 +62,26 @@ insert into users
 	}
 
 }
+
+/*
+Dla Postgres
+	CREATE TABLE users(
+id  SERIAL PRIMARY KEY,
+name varchar(50),
+balance int
+);
+
+CREATE TABLE user_transaction(
+id SERIAL PRIMARY KEY,
+user_id bigint,
+amount int,
+transaction_date timestamp,
+foreign key (user_id) references users(id) on delete cascade
+);
+
+
+
+insert into users
+			(name, balance)
+			values ('user1', 1000), ('user2', 5000), ('user3', 500);
+*/
