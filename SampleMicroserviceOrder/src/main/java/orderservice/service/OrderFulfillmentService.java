@@ -1,5 +1,7 @@
 package orderservice.service;
 
+import java.time.Duration;
+
 import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Schedules;
@@ -15,6 +17,7 @@ import orderservice.util.EntityDtoUtil;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
 
 @Service
 public class OrderFulfillmentService {
@@ -42,6 +45,8 @@ public class OrderFulfillmentService {
 	private  Mono<RequestContext> productRequestResponse(RequestContext rc) {
 	return	this.productClient.getProductById(rc.getOrderRequestDto().getProductId())
 		.doOnNext(rc::setProductDto)
+		//.retry(3)
+		.retryWhen(Retry.fixedDelay(5, Duration.ofSeconds(1)))
 		.thenReturn(rc);	
 	}
 	

@@ -1,5 +1,7 @@
 package productservice.controller;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,5 +66,11 @@ public class ProductController {
 		return this.productService.deleteProduct(id);
 	}
 	
-	
+	private void simulateRandomExepcion() {
+		int nextInt =ThreadLocalRandom.current().nextInt(1,10);
+		
+		if (nextInt >5) {
+			throw new RuntimeException("jakiś wyjontek :) ");
+		}
+	}
 }

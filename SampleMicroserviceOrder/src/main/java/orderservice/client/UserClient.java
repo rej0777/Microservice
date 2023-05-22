@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import orderservice.dto.ProductDto;
 import orderservice.dto.TransactionRequestDto;
 import orderservice.dto.TransactionResponseDto;
+import orderservice.dto.UserDto;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -26,7 +29,13 @@ private final WebClient webClient;
 		.uri("transaction")
 		.bodyValue(requestDto)
 		.retrieve()
-		.bodyToMono(TransactionResponseDto.class);
-		
+		.bodyToMono(TransactionResponseDto.class);		
+	}
+	
+	public Flux<UserDto> getAllUsers(){
+		return this.webClient
+				.get().uri("all")
+				.retrieve()
+				.bodyToFlux(UserDto.class);				
 	}
 }
