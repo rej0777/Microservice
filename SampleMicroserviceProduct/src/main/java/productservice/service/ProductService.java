@@ -9,12 +9,16 @@ import productservice.repository.ProductRepository;
 import productservice.util.EntityDtoUtil;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 
 @Service
 public class ProductService {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private Sinks.Many<ProductDto> sinks;
 	
 	public Flux<ProductDto> getAll(){
 		return this.productRepository.findAll()
@@ -34,7 +38,8 @@ public class ProductService {
 	return	productDtoMono
 			.map(EntityDtoUtil::toEntity)
 			.flatMap(this.productRepository::insert)
-			.map(EntityDtoUtil::toDto);
+			.map(EntityDtoUtil::toDto)
+			.doOnNext(this.sinks::tryEmitNext);
 	}
 
 	public Mono<ProductDto> updateProduct(String id, Mono<ProductDto> productDtoMono){
