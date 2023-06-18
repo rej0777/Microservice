@@ -34,7 +34,7 @@ public class ProductService {
 		return this.productRepository.findById(id).map(EntityDtoUtil::toDto);
 	}
 	
-	public Mono<ProductDto> insertMono(Mono<ProductDto> productDtoMono){
+	public Mono<ProductDto> insertProduct(Mono<ProductDto> productDtoMono){
 	return	productDtoMono
 			.map(EntityDtoUtil::toEntity)
 			.flatMap(this.productRepository::insert)

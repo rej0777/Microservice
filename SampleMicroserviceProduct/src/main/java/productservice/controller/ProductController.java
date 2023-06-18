@@ -50,7 +50,7 @@ public class ProductController {
 	
 	@PostMapping
 	public Mono<ProductDto> insertProduct(@RequestBody Mono<ProductDto> productDtoMono){
-		return this.productService.insertMono(productDtoMono);
+		return this.productService.insertProduct(productDtoMono);
 	}
 	
 	@PutMapping("{id}")

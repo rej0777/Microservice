@@ -3,9 +3,15 @@
 
 
 
-Product
+## Product
+ Stream for observing new product 
+http://localhost:8091/product/stream
 
-User
+add new product http://localhost:8091/product
+Body raw>json 
+{    "description": "produkt5" ,    "price": 1246}
+
+## User
 
 
 
